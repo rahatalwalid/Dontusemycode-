@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>RahatEarn - Earn Rewards</title>
     
-    <!-- Embedded CSS - Updated for Name Edit Modal -->
+    <!-- Embedded CSS -->
     <style>
         :root{--primary-color:#0f3460;--secondary-color:#537895;--bg-color:#f0f2f5;--card-bg:#fff;--text-color:#333;--light-text-color:#888;--success-color:#28a745;--error-color:#dc3545;--shadow:0 4px 15px rgba(0,0,0,.08)}*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}body{background-color:var(--bg-color);color:var(--text-color);-webkit-tap-highlight-color:transparent}#app-loading{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-color);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}.spinner{border:4px solid rgba(0,0,0,.1);border-radius:50%;border-top:4px solid var(--primary-color);width:40px;height:40px;animation:spin 1s linear infinite;margin-bottom:15px}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.auth-container{display:none;justify-content:center;align-items:center;min-height:100vh;padding:20px}.auth-card{background:var(--card-bg);padding:30px 25px;border-radius:12px;box-shadow:var(--shadow);width:100%;max-width:380px;text-align:center}.auth-card h2{margin-bottom:25px;color:var(--primary-color)}.input-group{position:relative;margin-bottom:20px}
         .input-group .icon-emoji { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--light-text-color); }
@@ -13,7 +13,7 @@
         .task-item .task-icon { font-size: 32px; color: var(--primary-color); display: block; margin-bottom: 10px; }
         .task-item span{font-weight:500}.form-group label{display:block;margin-bottom:8px;font-weight:500}.form-group input,.form-group select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}.info-item{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #eee}.info-item:last-child{border-bottom:none}.info-item span:first-child{color:var(--light-text-color)}.info-item span:last-child{font-weight:500}
         .edit-btn { background: none; border: none; font-size: 20px; cursor: pointer; padding-left: 10px; }
-        #ad-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center;flex-direction:column}#ad-modal .ad-content{background:#fff;padding:20px;border-radius:12px;text-align:center}#ad-modal .ad-timer{margin-top:15px;font-size:24px;font-weight:700;color:var(--primary-color)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:60px;background:var(--card-bg);display:flex;justify-content:space-around;box-shadow:0 -2px 10px rgba(0,0,0,.06)}.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--light-text-color);cursor:pointer;transition:color .3s}
+        #ad-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center;flex-direction:column}#ad-modal .ad-content{background:#fff;padding:20px;border-radius:12px;text-align:center;min-height:290px;}#ad-modal .ad-timer{margin-top:15px;font-size:24px;font-weight:700;color:var(--primary-color)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:60px;background:var(--card-bg);display:flex;justify-content:space-around;box-shadow:0 -2px 10px rgba(0,0,0,.06)}.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--light-text-color);cursor:pointer;transition:color .3s}
         .nav-item .nav-icon { font-size: 24px; margin-bottom: 2px; }
         .nav-item span{font-size:12px;font-weight:500}.nav-item.active{color:var(--primary-color)}#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:8px;color:#fff;z-index:1001;opacity:0;visibility:hidden;transition:all .4s}#toast.show{opacity:1;visibility:visible;top:75px}#toast.success{background:var(--success-color)}#toast.error{background:var(--error-color)}
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
@@ -105,7 +105,19 @@
         
         <div id="ad-modal">
             <div class="ad-content">
-                <img src="https://via.placeholder.com/300x200.png/0f3460/FFFFFF?text=Your+Ad+Here" alt="Ad">
+                <!-- =================================================================== -->
+                <!-- Your Adsterra Ad Code is now here! -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'e5504120cbdf9d4e895bf69417cd072f',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/e5504120cbdf9d4e895bf69417cd072f/invoke.js"></script>
+                <!-- =================================================================== -->
                 <div id="ad-timer" class="ad-timer">15</div>
             </div>
         </div>
@@ -163,7 +175,7 @@
         
         const EARN_PER_AD = 0.03;
         const DAILY_EARN_LIMIT = 3000;
-        const AD_TIMER_SECONDS = 10;
+        const AD_TIMER_SECONDS = 15;
         let currentUser = null;
         let userDataListener = null;
 
@@ -358,4 +370,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
