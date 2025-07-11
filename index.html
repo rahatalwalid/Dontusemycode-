@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>RahatEarn - Earn Rewards</title>
 
-<link rel="icon" href="/file_0000000045ac61f793d04c4858aff2f3.png" type="image/png"> 
-    
-    <!-- Embedded CSS -->
+  <link rel="icon" href="/file_0000000045ac61f793d04c4858aff2f3.png" type="image/png">   
+  
     <style>
         :root{--primary-color:#0f3460;--secondary-color:#537895;--bg-color:#f0f2f5;--card-bg:#fff;--text-color:#333;--light-text-color:#888;--success-color:#28a745;--error-color:#dc3545;--shadow:0 4px 15px rgba(0,0,0,.08)}*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}body{background-color:var(--bg-color);color:var(--text-color);-webkit-tap-highlight-color:transparent}#app-loading{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-color);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}.spinner{border:4px solid rgba(0,0,0,.1);border-radius:50%;border-top:4px solid var(--primary-color);width:40px;height:40px;animation:spin 1s linear infinite;margin-bottom:15px}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.auth-container{display:none;justify-content:center;align-items:center;min-height:100vh;padding:20px}.auth-card{background:var(--card-bg);padding:30px 25px;border-radius:12px;box-shadow:var(--shadow);width:100%;max-width:380px;text-align:center}.auth-card h2{margin-bottom:25px;color:var(--primary-color)}.input-group{position:relative;margin-bottom:20px}
         .input-group .icon-emoji { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--light-text-color); }
@@ -15,7 +14,11 @@
         .task-item .task-icon { font-size: 32px; color: var(--primary-color); display: block; margin-bottom: 10px; }
         .task-item span{font-weight:500}.form-group label{display:block;margin-bottom:8px;font-weight:500}.form-group input,.form-group select{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}.info-item{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #eee}.info-item:last-child{border-bottom:none}.info-item span:first-child{color:var(--light-text-color)}.info-item span:last-child{font-weight:500}
         .edit-btn { background: none; border: none; font-size: 20px; cursor: pointer; padding-left: 10px; }
-        #ad-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center;flex-direction:column}#ad-modal .ad-content{background:#fff;padding:20px;border-radius:12px;text-align:center;min-height:290px;}#ad-modal .ad-timer{margin-top:15px;font-size:24px;font-weight:700;color:var(--primary-color)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:60px;background:var(--card-bg);display:flex;justify-content:space-around;box-shadow:0 -2px 10px rgba(0,0,0,.06)}.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--light-text-color);cursor:pointer;transition:color .3s}
+        #ad-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center;flex-direction:column}
+        #ad-modal .ad-content{background:#fff;padding:20px;border-radius:12px;text-align:center;min-height:350px;display:flex;flex-direction:column;justify-content:space-between;}
+        #ad-timer { font-size: 24px; font-weight: bold; color: var(--primary-color); margin-top: 10px; }
+        #ad-instruction-message { display: none; background: #d4edda; color: #155724; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 10px;}
+        .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:60px;background:var(--card-bg);display:flex;justify-content:space-around;box-shadow:0 -2px 10px rgba(0,0,0,.06)}.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--light-text-color);cursor:pointer;transition:color .3s}
         .nav-item .nav-icon { font-size: 24px; margin-bottom: 2px; }
         .nav-item span{font-size:12px;font-weight:500}.nav-item.active{color:var(--primary-color)}#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:8px;color:#fff;z-index:1001;opacity:0;visibility:hidden;transition:all .4s}#toast.show{opacity:1;visibility:visible;top:75px}#toast.success{background:var(--success-color)}#toast.error{background:var(--error-color)}
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
@@ -34,117 +37,48 @@
     <div id="auth-container" class="auth-container">
         <div id="login-form" class="auth-card">
             <h2>Welcome Back!</h2>
-            <form id="login">
-                <div class="input-group"><span class="icon-emoji">📧</span><input type="email" id="login-email" placeholder="Email Address" required></div>
-                <div class="input-group"><span class="icon-emoji">🔒</span><input type="password" id="login-password" placeholder="Password" required></div>
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
+            <form id="login"><div class="input-group"><span class="icon-emoji">📧</span><input type="email" id="login-email" placeholder="Email Address" required></div><div class="input-group"><span class="icon-emoji">🔒</span><input type="password" id="login-password" placeholder="Password" required></div><button type="submit" class="btn-primary">Login</button></form>
             <p class="auth-toggle" id="show-register-form">Don't have an account? <b>Register</b></p>
         </div>
         <div id="register-form" class="auth-card" style="display: none;">
             <h2>Create Account</h2>
-            <form id="register">
-                 <div class="input-group"><span class="icon-emoji">👤</span><input type="text" id="register-name" placeholder="Full Name" required></div>
-                <div class="input-group"><span class="icon-emoji">📧</span><input type="email" id="register-email" placeholder="Email Address" required></div>
-                <div class="input-group"><span class="icon-emoji">🔒</span><input type="password" id="register-password" placeholder="Password" required></div>
-                <button type="submit" class="btn-primary">Register</button>
-            </form>
+            <form id="register"><div class="input-group"><span class="icon-emoji">👤</span><input type="text" id="register-name" placeholder="Full Name" required></div><div class="input-group"><span class="icon-emoji">📧</span><input type="email" id="register-email" placeholder="Email Address" required></div><div class="input-group"><span class="icon-emoji">🔒</span><input type="password" id="register-password" placeholder="Password" required></div><button type="submit" class="btn-primary">Register</button></form>
             <p class="auth-toggle" id="show-login-form">Already have an account? <b>Login</b></p>
         </div>
     </div>
     
     <div id="app-container" style="display: none;">
-        <header class="app-header">
-            <div class="welcome-text">Welcome, <span id="welcome-name">User</span>!</div>
-        </header>
+        <header class="app-header"><div class="welcome-text">Welcome, <span id="welcome-name">User</span>!</div></header>
         <main class="main-content">
-            <div id="home-page" class="page active">
-                <div class="card balance-card"><p>Current Balance</p><h1 id="balance-amount">৳0.00</h1></div>
-                <div class="task-grid">
-                    <div class="task-item" id="go-to-earn"><span class="task-icon">💰</span><span>Daily Tasks</span></div>
-                    <div class="task-item" id="go-to-withdraw"><span class="task-icon">📤</span><span>Withdraw</span></div>
-                </div>
-                <div class="card">
-                    <h3>Referral System</h3>
-                    <p>Share this link with friends to earn rewards!</p>
-                    <input type="text" id="referral-link" readonly style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
-                    <p style="text-align:center; margin-top:10px; font-size:14px; color: var(--light-text-color)">Total Referrals: <b id="referral-count">0</b></p>
-                </div>
-            </div>
-            <div id="earn-page" class="page">
-                <div class="card">
-                    <h3>Daily Tasks</h3>
-                    <p>Click the button below to watch a short ad and earn <b>৳0.03</b>. You can earn up to <b>৳3000</b> per day.</p>
-                    <br>
-                    <button id="watch-ad-btn" class="btn-primary">Watch Ad Now</button>
-                </div>
-            </div>
-            <div id="withdraw-page" class="page">
-                 <div class="card">
-                    <h3>Request Withdrawal</h3>
-                    <form id="withdraw-form">
-                        <div class="form-group"><label for="withdraw-amount">Amount (৳)</label><input type="number" id="withdraw-amount" placeholder="Minimum 50" min="50" required></div>
-                        <div class="form-group"><label for="withdraw-method">Method</label><select id="withdraw-method" required><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Mobile Recharge">Mobile Recharge</option></select></div>
-                        <div class="form-group"><label for="withdraw-number">Account Number</label><input type="text" id="withdraw-number" placeholder="e.g., 01XXXXXXXXX" required></div>
-                        <br>
-                        <button type="submit" class="btn-primary">Submit Request</button>
-                    </form>
-                 </div>
-            </div>
-            <div id="profile-page" class="page">
-                <div class="card">
-                    <h3>My Profile</h3>
-                    <div class="info-item">
-                        <span>Full Name</span>
-                        <div><span id="profile-name">Not Set</span><button id="edit-name-btn" class="edit-btn">✏️</button></div>
-                    </div>
-                    <div class="info-item"><span>Email</span><span id="profile-email"></span></div>
-                    <div class="info-item"><span>User ID</span><span id="profile-uid" style="font-size: 12px; word-break: break-all;"></span></div>
-                </div>
-                <button id="logout-btn" class="btn-primary" style="background-color: var(--error-color);">Logout</button>
-            </div>
+            <div id="home-page" class="page active"><div class="card balance-card"><p>Current Balance</p><h1 id="balance-amount">0.00 BDT</h1></div><div class="task-grid"><div class="task-item" id="go-to-earn"><span class="task-icon">💰</span><span>Daily Tasks</span></div><div class="task-item" id="go-to-withdraw"><span class="task-icon">📤</span><span>Withdraw</span></div></div><div class="card"><h3>Referral System</h3><p>Refer a friend and earn 2 BDT instantly!</p><input type="text" id="referral-link" readonly style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: center;"><p style="text-align:center; margin-top:10px; font-size:14px; color: var(--light-text-color)">Total Referrals: <b id="referral-count">0</b></p></div></div>
+            <div id="earn-page" class="page"><div class="card"><h3>Daily Tasks</h3><p>Click the button below to watch an ad and earn <b>0.01 BDT</b>.</p><p>Refer a friend and earn <b>2 BDT</b> instantly!</p><br><button id="watch-ad-btn" class="btn-primary">Watch Ad Now</button></div></div>
+            <div id="withdraw-page" class="page"><div class="card"><h3>Request Withdrawal</h3><form id="withdraw-form"><div class="form-group"><label for="withdraw-amount">Amount (BDT)</label><input type="number" id="withdraw-amount" placeholder="Minimum 50" min="50" required></div><div class="form-group"><label for="withdraw-method">Method</label><select id="withdraw-method" required><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Mobile Recharge">Mobile Recharge</option></select></div><div class="form-group"><label for="withdraw-number">Account Number</label><input type="text" id="withdraw-number" placeholder="e.g., 01XXXXXXXXX" required></div><br><button type="submit" class="btn-primary">Submit Request</button></form></div></div>
+            <div id="profile-page" class="page"><div class="card"><h3>My Profile</h3><div class="info-item"><span>Full Name</span><div><span id="profile-name">Not Set</span><button id="edit-name-btn" class="edit-btn">✏️</button></div></div><div class="info-item"><span>Email</span><span id="profile-email"></span></div><div class="info-item"><span>User ID</span><span id="profile-uid" style="font-size: 12px; word-break: break-all;"></span></div></div><button id="logout-btn" class="btn-primary" style="background-color: var(--error-color);">Logout</button></div>
         </main>
         
         <div id="ad-modal">
             <div class="ad-content">
-                <!-- =================================================================== -->
-                <!-- Your Adsterra Ad Code is now here! -->
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : 'e5504120cbdf9d4e895bf69417cd072f',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/e5504120cbdf9d4e895bf69417cd072f/invoke.js"></script>
-                <!-- =================================================================== -->
-                <div id="ad-timer" class="ad-timer">15</div>
+                <div id="ad-container-wrapper">
+                    <script type="text/javascript">
+                        atOptions = {'key' : 'e5504120cbdf9d4e895bf69417cd072f','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/e5504120cbdf9d4e895bf69417cd072f/invoke.js"></script>
+                </div>
+                <div>
+                    <div id="ad-timer"></div>
+                    <div id="ad-instruction-message">আপনি অ্যাডে ক্লিক করে ট্যাবটি বন্ধ করে দিন। টাকা আপনার Wallet-এ চলে এসেছে।</div>
+                </div>
             </div>
         </div>
 
-        <nav class="bottom-nav">
-            <div class="nav-item active" data-page="home-page"><span class="nav-icon">🏠</span><span>Home</span></div>
-            <div class="nav-item" data-page="earn-page"><span class="nav-icon">✨</span><span>Tasks</span></div>
-            <div class="nav-item" data-page="withdraw-page"><span class="nav-icon">💸</span><span>Withdraw</span></div>
-            <div class="nav-item" data-page="profile-page"><span class="nav-icon">👤</span><span>Profile</span></div>
-        </nav>
+        <nav class="bottom-nav"><div class="nav-item active" data-page="home-page"><span class="nav-icon">🏠</span><span>Home</span></div><div class="nav-item" data-page="earn-page"><span class="nav-icon">✨</span><span>Tasks</span></div><div class="nav-item" data-page="withdraw-page"><span class="nav-icon">💸</span><span>Withdraw</span></div><div class="nav-item" data-page="profile-page"><span class="nav-icon">👤</span><span>Profile</span></div></nav>
     </div>
-
+    
+    <!-- FIX: Name edit modal is now outside the main app container to prevent scrolling issues -->
     <div id="name-edit-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>Update Your Name</h3>
-            <form id="edit-name-form">
-                <div class="form-group">
-                    <input type="text" id="new-name-input" placeholder="Enter your full name" required>
-                </div>
-                <button type="submit" class="btn-primary">Save Changes</button>
-            </form>
-            <button id="cancel-edit-btn" class="btn-primary btn-secondary">Cancel</button>
-        </div>
+        <div class="modal-content"><h3>Update Your Name</h3><form id="edit-name-form"><div class="form-group"><input type="text" id="new-name-input" placeholder="Enter your full name" required></div><button type="submit" class="btn-primary">Save Changes</button></form><button id="cancel-edit-btn" class="btn-primary btn-secondary">Cancel</button></div>
     </div>
-
+    
     <div id="toast"></div>
 
     <script type="module" id="app-logic">
@@ -152,34 +86,27 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
         import { getDatabase, ref, set, get, onValue, push, runTransaction, update } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyByWTYiRMf8tFgvU_ekxhMk6pB2uBXjPl8",
-            authDomain: "rahatearn-rahatalwalid.firebaseapp.com",
-            databaseURL: "https://rahatearn-rahatalwalid-default-rtdb.firebaseio.com",
-            projectId: "rahatearn-rahatalwalid",
-            storageBucket: "rahatearn-rahatalwalid.appspot.com",
-            messagingSenderId: "1052795248949",
-            appId: "1:1052795248949:web:ce3eb50d0ad5d0affdec7c"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyByWTYiRMf8tFgvU_ekxhMk6pB2uBXjPl8", authDomain: "rahatearn-rahatalwalid.firebaseapp.com", databaseURL: "https://rahatearn-rahatalwalid-default-rtdb.firebaseio.com", projectId: "rahatearn-rahatalwalid", storageBucket: "rahatearn-rahatalwalid.appspot.com", messagingSenderId: "1052795248949", appId: "1:1052795248949:web:ce3eb50d0ad5d0affdec7c" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // --- DOM Elements ---
         const loadingSpinner = document.getElementById('app-loading');
         const authContainer = document.getElementById('auth-container');
         const appContainer = document.getElementById('app-container');
-        const pages = document.querySelectorAll('.page');
-        const navItems = document.querySelectorAll('.nav-item');
-        const toast = document.getElementById('toast');
-        const nameEditModal = document.getElementById('name-edit-modal');
-        const newNameInput = document.getElementById('new-name-input');
+        const adModal = document.getElementById('ad-modal');
+        const adTimerEl = document.getElementById('ad-timer');
+        const adInstructionMessage = document.getElementById('ad-instruction-message');
+
+        // ✅ NEW EARNING RULES
+        const EARN_PER_AD = 0.01;
+        const REFERRAL_BONUS = 2.00;
         
-        const EARN_PER_AD = 0.03;
-        const DAILY_EARN_LIMIT = 3000;
-        const AD_TIMER_SECONDS = 15;
         let currentUser = null;
         let userDataListener = null;
+        let rewardGivenForThisAd = false;
+        let adTimerInterval;
 
         onAuthStateChanged(auth, (user) => {
             loadingSpinner.style.display = 'none';
@@ -199,45 +126,30 @@
         });
 
         function navigateTo(pageId) {
-            pages.forEach(p => p.classList.remove('active'));
-            navItems.forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             const activeNavItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
             if (activeNavItem) activeNavItem.classList.add('active');
         }
         
         function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = `show ${type}`;
             setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
         }
 
-        navItems.forEach(item => {
-            item.addEventListener('click', () => navigateTo(item.dataset.page));
-        });
-
-        document.getElementById('show-register-form').addEventListener('click', () => {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-        });
-
-        document.getElementById('show-login-form').addEventListener('click', () => {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-        });
-        
+        // --- Event Listeners ---
+        document.querySelectorAll('.nav-item').forEach(item => { item.addEventListener('click', () => navigateTo(item.dataset.page)); });
+        document.getElementById('show-register-form').addEventListener('click', () => { document.getElementById('login-form').style.display = 'none'; document.getElementById('register-form').style.display = 'block'; });
+        document.getElementById('show-login-form').addEventListener('click', () => { document.getElementById('login-form').style.display = 'block'; document.getElementById('register-form').style.display = 'none'; });
         document.getElementById('go-to-earn').addEventListener('click', () => navigateTo('earn-page'));
         document.getElementById('go-to-withdraw').addEventListener('click', () => navigateTo('withdraw-page'));
-        
-        document.getElementById('referral-link').addEventListener('click', () => {
-            const linkInput = document.getElementById('referral-link');
-            if(!linkInput.value) return;
-            linkInput.select();
-            document.execCommand('copy');
-            showToast('Referral link copied!');
-        });
-
         document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+        document.getElementById('referral-link').addEventListener('click', () => { const linkInput = document.getElementById('referral-link'); if(!linkInput.value) return; linkInput.select(); document.execCommand('copy'); showToast('Referral link copied!'); });
+        document.getElementById('edit-name-btn').addEventListener('click', () => { const modal = document.getElementById('name-edit-modal'); const input = document.getElementById('new-name-input'); const currentName = document.getElementById('profile-name').textContent; input.value = currentName === 'Not Set' ? '' : currentName; modal.style.display = 'flex'; });
+        document.getElementById('cancel-edit-btn').addEventListener('click', () => { document.getElementById('name-edit-modal').style.display = 'none'; });
 
         document.getElementById('register').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -248,127 +160,84 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 const refId = new URLSearchParams(window.location.search).get('ref');
-                await set(ref(db, 'users/' + user.uid), { name, email, balance: 0, referrals: 0, referredBy: refId || null });
+                await set(ref(db, 'users/' + user.uid), { name, email, balance: 0, referrals: 0 });
                 if (refId) {
-                    runTransaction(ref(db, `users/${refId}/referrals`), (count) => (count || 0) + 1);
+                    const referrerRef = ref(db, `users/${refId}`);
+                    await runTransaction(referrerRef, (referrerData) => {
+                        if (referrerData) {
+                            referrerData.balance = (referrerData.balance || 0) + REFERRAL_BONUS;
+                            referrerData.referrals = (referrerData.referrals || 0) + 1;
+                        }
+                        return referrerData;
+                    });
+                     showToast(`2৳ referral bonus given to your friend!`, 'success');
                 }
                 showToast('Registration successful!', 'success');
             } catch (error) { showToast(error.message, 'error'); }
         });
 
-        document.getElementById('login').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            try { await signInWithEmailAndPassword(auth, email, password); } 
-            catch (error) { showToast(error.message, 'error'); }
-        });
+        document.getElementById('login').addEventListener('submit', async (e) => { e.preventDefault(); try { await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value); } catch (error) { showToast(error.message, 'error'); } });
+        document.getElementById('withdraw-form').addEventListener('submit', async (e) => { e.preventDefault(); const amount = parseFloat(document.getElementById('withdraw-amount').value); const userSnapshot = await get(ref(db, `users/${currentUser.uid}`)); if (amount > userSnapshot.val().balance) { showToast('Insufficient balance.', 'error'); return; } try { await push(ref(db, 'withdrawals'), { uid: currentUser.uid, email: currentUser.email, amount, method: document.getElementById('withdraw-method').value, number: document.getElementById('withdraw-number').value, status: 'pending', timestamp: new Date().toISOString() }); showToast('Withdrawal request submitted!', 'success'); e.target.reset(); } catch (error) { showToast(`Request failed: ${error.message}`, 'error'); } });
+        document.getElementById('edit-name-form').addEventListener('submit', async (e) => { e.preventDefault(); const newName = document.getElementById('new-name-input').value.trim(); if (newName && currentUser) { try { await update(ref(db, 'users/' + currentUser.uid), { name: newName }); showToast('Name updated successfully!', 'success'); document.getElementById('name-edit-modal').style.display = 'none'; } catch (error) { showToast('Failed to update name.', 'error'); } } });
 
-        document.getElementById('withdraw-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
-            if (amount > userSnapshot.val().balance) { showToast('Insufficient balance.', 'error'); return; }
-
-            try {
-                await push(ref(db, 'withdrawals'), {
-                    uid: currentUser.uid, email: currentUser.email, amount,
-                    method: document.getElementById('withdraw-method').value,
-                    number: document.getElementById('withdraw-number').value,
-                    status: 'pending', timestamp: new Date().toISOString()
-                });
-                showToast('Withdrawal request submitted!', 'success');
-                e.target.reset();
-            } catch (error) { showToast(`Request failed: ${error.message}`, 'error'); }
-        });
-        
-        document.getElementById('edit-name-btn').addEventListener('click', () => {
-            const currentName = document.getElementById('profile-name').textContent;
-            newNameInput.value = currentName === 'Not Set' ? '' : currentName;
-            nameEditModal.style.display = 'flex';
-        });
-
-        document.getElementById('cancel-edit-btn').addEventListener('click', () => {
-            nameEditModal.style.display = 'none';
-        });
-
-        document.getElementById('edit-name-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const newName = newNameInput.value.trim();
-            if (newName && currentUser) {
-                try {
-                    const userRef = ref(db, 'users/' + currentUser.uid);
-                    await update(userRef, { name: newName });
-                    showToast('Name updated successfully!', 'success');
-                    nameEditModal.style.display = 'none';
-                } catch (error) {
-                    showToast('Failed to update name.', 'error');
-                }
-            }
-        });
-
-        function setupUserListeners(uid) {
-            const userRef = ref(db, 'users/' + uid);
-            userDataListener = onValue(userRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    updateUIWithUserData(snapshot.val());
-                }
-            });
-        }
+        function setupUserListeners(uid) { onValue(ref(db, 'users/' + uid), (snapshot) => { if (snapshot.exists()) { updateUIWithUserData(snapshot.val()); } }); }
         
         function updateUIWithUserData(data) {
             const firstName = (data.name || 'User').split(' ')[0];
             document.getElementById('welcome-name').textContent = firstName;
             document.getElementById('profile-name').textContent = data.name || 'Not Set';
-            document.getElementById('balance-amount').textContent = `৳${(data.balance || 0).toFixed(2)}`;
+            document.getElementById('balance-amount').textContent = `${(data.balance || 0).toFixed(2)} BDT`;
             document.getElementById('referral-count').textContent = data.referrals || 0;
         }
 
         function updateProfileUI(user) {
             document.getElementById('profile-email').textContent = user.email;
             document.getElementById('profile-uid').textContent = user.uid;
-            const link = `${window.location.origin}${window.location.pathname}?ref=${user.uid}`;
-            document.getElementById('referral-link').value = link;
+            document.getElementById('referral-link').value = `${window.location.origin}${window.location.pathname}?ref=${user.uid}`;
         }
         
-        document.getElementById('watch-ad-btn').addEventListener('click', async () => {
-            const earningsRef = ref(db, `earnings/${currentUser.uid}`);
-            const snapshot = await get(earningsRef);
-            const earningsData = snapshot.val() || { dailyTotal: 0, lastEarnedDate: '' };
-            const today = new Date().toISOString().split('T')[0];
-
-            if (earningsData.lastEarnedDate === today && earningsData.dailyTotal >= DAILY_EARN_LIMIT) {
-                showToast('Daily earning limit reached.', 'error'); return;
-            }
-
-            const adModal = document.getElementById('ad-modal');
+        // ✅ CORRECTED AD LOGIC
+        document.getElementById('watch-ad-btn').addEventListener('click', () => {
+            rewardGivenForThisAd = false;
+            adInstructionMessage.style.display = 'none';
             adModal.style.display = 'flex';
-            let countdown = AD_TIMER_SECONDS;
-            const timerEl = document.getElementById('ad-timer');
-            timerEl.textContent = countdown;
-            const timerInterval = setInterval(() => {
-                countdown--;
-                timerEl.textContent = countdown;
-                if (countdown <= 0) {
-                    clearInterval(timerInterval);
+            
+            let counter = 1;
+            adTimerEl.textContent = `Timer: ${counter}`;
+            
+            clearInterval(adTimerInterval);
+            adTimerInterval = setInterval(() => {
+                counter++;
+                adTimerEl.textContent = `Timer: ${counter}`;
+
+                if (counter === 8) {
+                    adInstructionMessage.style.display = 'block';
+                }
+                
+                if (counter === 9) {
+                    creditUserReward(); // Reward is given automatically
+                }
+
+                if (counter >= 10) {
+                    clearInterval(adTimerInterval);
                     adModal.style.display = 'none';
-                    creditUserReward();
                 }
             }, 1000);
         });
-
+        
         async function creditUserReward() {
+            if (rewardGivenForThisAd || !currentUser) return;
+            rewardGivenForThisAd = true;
+
             try {
-                await runTransaction(ref(db, `users/${currentUser.uid}/balance`), (balance) => (balance || 0) + EARN_PER_AD);
-                await runTransaction(ref(db, `earnings/${currentUser.uid}`), (data) => {
-                    const today = new Date().toISOString().split('T')[0];
-                    if (!data) data = { dailyTotal: 0, lastEarnedDate: '' };
-                    if (data.lastEarnedDate !== today) { data.dailyTotal = 0; data.lastEarnedDate = today; }
-                    data.dailyTotal += EARN_PER_AD;
-                    return data;
+                await runTransaction(ref(db, `users/${currentUser.uid}/balance`), (balance) => {
+                    return (balance || 0) + EARN_PER_AD;
                 });
-                showToast(`+ ৳${EARN_PER_AD.toFixed(2)} added!`, 'success');
-            } catch (error) { showToast('Failed to add reward.', 'error'); }
+                showToast(`0.01৳ added to your wallet`, 'success');
+            } catch (error) { 
+                showToast('Failed to add reward.', 'error');
+                console.error("Reward Error:", error);
+            }
         }
     </script>
 </body>
